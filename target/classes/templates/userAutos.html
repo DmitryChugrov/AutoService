@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Мои автомобили</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #eabc05; /* Желтый фон страницы */
+            color: #222222; /* Черный текст */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            color: #222222; /* Черный цвет для заголовка */
+            text-align: center;
+            margin-top: 50px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffcc00; /* Желтый фон контейнера */
+            border-radius: 10px;
+        }
+        .alert {
+            background-color: #f8d7da; /* Красный фон для ошибок */
+            color: #721c24; /* Красный текст */
+            border: 1px solid #f5c6cb;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table th, table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #222222; /* Черные линии между строками */
+        }
+        table th {
+            background-color: #222222; /* Черный фон для заголовков таблицы */
+            color: #ffcc00; /* Желтые буквы в заголовках */
+        }
+        table td {
+            background-color: #222222; /* Черный фон для ячеек */
+            color: #ffcc00; /* Желтые буквы в ячейках */
+        }
+        table tr:hover {
+            background-color: #444444; /* Темный фон при наведении */
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Мои автомобили</h1>
+
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+    <table class="table table-striped mt-4" th:if="${autos != null}">
+        <thead>
+        <tr>
+            <th>Бренд</th>
+            <th>Модель</th>
+            <th>Поколение</th>
+            <th>Год</th>
+            <th>VIN номер</th>
+            <th>Госномер</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="auto : ${autos}">
+            <td th:text="${auto.brand}">Бренд</td>
+            <td th:text="${auto.model}">Модель</td>
+            <td th:text="${auto.generation}">Поколение</td>
+            <td th:text="${auto.year}">Год</td>
+            <td th:text="${auto.vinNumber}">VIN номер</td>
+            <td th:text="${auto.GOS_number}">Госномер</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

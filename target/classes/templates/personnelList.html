@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Список персонала</title>
+    <style>
+        body {
+            background-color: #eabc05; /* Желтый фон страницы */
+            color: #222222; /* Черный текст */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #222222; /* Черный цвет для заголовка */
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #ffcc00; /* Желтый фон таблицы */
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #222222; /* Черная граница */
+            text-align: left;
+        }
+        th {
+            background-color: #222222; /* Черный фон заголовков таблицы */
+            color: #ffcc00; /* Желтый текст в заголовках */
+        }
+        td {
+            color: #222222; /* Черный текст в ячейках */
+        }
+        .btn {
+            padding: 10px 20px;
+            background-color: #222222; /* Черный фон кнопки */
+            border: 1px solid #222222;
+            color: #ffcc00; /* Желтый текст кнопки */
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background-color: #444444; /* Темно-серый фон при наведении */
+        }
+        .delete-btn {
+            background-color: #ff0000 !important;
+            color: #ffffff !important;
+        }
+        .delete-btn:hover {
+            background-color: #cc0000 !important;
+        }
+        .search-container {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 14px;
+            width: 300px;
+            background-color: #222222; /* Черный фон для ввода */
+            color: #ffcc00; /* Желтый текст ввода */
+            border: 1px solid #222222; /* Черная граница */
+            border-radius: 5px;
+        }
+        input[type="text"]:focus {
+            border-color: #ffcc00; /* Желтая граница при фокусе */
+            outline: none;
+        }
+        button[type="submit"] {
+            padding: 10px 20px;
+            font-size: 14px;
+            background-color: #222222; /* Черный фон кнопки */
+            color: #ffcc00; /* Желтый текст кнопки */
+            border: 1px solid #222222;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: #444444; /* Темно-серый фон при наведении */
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<h1>Список персонала</h1>
+
+<div class="search-container">
+    <form th:action="@{/manager/clients}" method="get">
+        <input type="text" name="search" th:value="${searchQuery}" placeholder="Поиск по имени, фамилии, телефону или email">
+        <button type="submit" class="btn">Найти</button>
+    </form>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Роль</th>
+        <th>Email</th>
+        <th>Телефон</th>
+        <th>Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="client : ${clients}">
+        <td th:text="${client.id}"></td>
+        <td th:text="${client.username}"></td>
+        <td th:text="${client.surname}"></td>
+        <td th:text="${client.role}"></td>
+        <td th:text="${client.email}"></td>
+        <td th:text="${client.phone_number}"></td>
+        <td>
+            <form th:if="${client.role == 'MANAGER'}" th:action="@{/operatorBD/deleteClient}" method="post" th:object="${client}">
+                <input type="hidden" name="id" th:value="${client.id}"/>
+                <button type="submit" class="btn delete-btn">Удалить</button>
+            </form>
+        </td>
+
+    </tr>
+    </tbody>
+</table>
+
+<div class="footer">
+    <a th:href="@{/home}" class="btn">На главную</a>
+</div>
+</body>
+</html>
