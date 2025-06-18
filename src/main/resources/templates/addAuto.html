@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Добавить автомобиль</title>
+    <style>
+        body {
+            background-color: #eabc05; /* Желтый фон страницы */
+            color: #222222; /* Черный текст */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            color: #222222; /* Черный цвет заголовка */
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 2px solid #222222; /* Черная рамка */
+            border-radius: 10px;
+            background-color: #ffcc00; /* Желтый фон формы */
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            font-size: 16px;
+            color: #222222; /* Черный цвет для меток */
+        }
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            border: 2px solid #222222;
+            border-radius: 5px;
+            background-color: #222222; /* Черный фон поля */
+            color: #ffcc00; /* Желтый цвет текста */
+        }
+        .form-control:focus {
+            border-color: #444444; /* Темный цвет при фокусе */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .btn {
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #222222; /* Черная кнопка */
+            color: #ffcc00; /* Желтый текст */
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #444444; /* Темный черный на hover */
+        }
+        .text-danger {
+            color: #ff0000; /* Красный цвет для ошибок */
+        }
+        select {
+            background-color: #222222; /* Черный фон для select */
+            color: #ffcc00; /* Желтый текст в select */
+        }
+        select option {
+            background-color: #222222; /* Черный фон для option */
+            color: #ffcc00; /* Желтый текст для option */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Добавление автомобиля</h1>
+    <form th:action="@{/addAuto}" th:object="${auto}" method="post">
+        <div class="form-group">
+            <label for="brand">Бренд:</label>
+            <select id="brand" name="brand" class="form-control" onchange="loadModels()">
+                <option value="">Выберите бренд</option>
+                <option th:each="brand : ${brands}" th:value="${brand.name()}" th:text="${brand.name()}"></option>
+            </select>
+            <div th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}" class="text-danger"></div>
+        </div>
+
+        <!-- Модель -->
+        <div class="form-group">
+            <label for="model">Модель:</label>
+            <select id="model" name="model" class="form-control" onchange="loadGenerations()">
+                <option value="">Выберите модель</option>
+            </select>
+            <div th:if="${#fields.hasErrors('model')}" th:errors="*{model}" class="text-danger"></div>
+        </div>
+
+        <!-- Поколение -->
+        <div class="form-group">
+            <label for="generation">Поколение:</label>
+            <select id="generation" name="generation" class="form-control">
+                <option value="">Выберите поколение</option>
+            </select>
+            <div th:if="${#fields.hasErrors('generation')}" th:errors="*{generation}" class="text-danger"></div>
+        </div>
+
+        <!-- Год выпуска -->
+        <div class="form-group">
+            <label for="year">Год:</label>
+            <input type="number" id="year" name="year" th:field="*{year}" class="form-control" min="1900" max="2099" required>
+            <div th:if="${#fields.hasErrors('year')}" th:errors="*{year}" class="text-danger"></div>
+        </div>
+
+        <!-- VIN номер -->
+        <div class="form-group">
+            <label for="vinNumber">VIN номер:</label>
+            <input type="text" id="vinNumber" name="vinNumber" th:field="*{vinNumber}" class="form-control" required minlength="17" maxlength="17">
+            <div th:if="${#fields.hasErrors('vinNumber')}" th:errors="*{vinNumber}" class="text-danger"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="GOS_number">Госномер:</label>
+            <input type="text" id="GOS_number" name="GOS_number"
+                   th:field="*{GOS_number}" class="form-control"
+                   placeholder="Например: А333КВ33" required>
+            <div th:if="${#fields.hasErrors('GOS_number')}" th:errors="*{GOS_number}" class="text-danger"></div>
+        </div>
+
+        <button type="submit" class="btn">Добавить автомобиль</button>
+    </form>
+</div>
+
+<script>
+    function loadModels() {
+        const brand = document.getElementById('brand').value;
+        fetch(/models?brand=${brand})
+            .then(response => response.json())
+            .then(models => {
+                const modelSelect = document.getElementById('model');
+                modelSelect.innerHTML = '<option value="">Выберите модель</option>';
+                models.forEach(model => {
+                    const option = document.createElement('option');
+                    option.value = model.name;
+                    option.text = model.name;
+                    modelSelect.appendChild(option);
+                });
+                document.getElementById('generation').innerHTML = '<option value="">Выберите поколение</option>';
+            });
+    }
+
+    function loadGenerations() {
+        const brand = document.getElementById('brand').value;
+        const model = document.getElementById('model').value;
+        fetch(/generations?brand=${brand}&model=${model})
+            .then(response => response.json())
+            .then(generations => {
+                const generationSelect = document.getElementById('generation');
+                generationSelect.innerHTML = '<option value="">Выберите поколение</option>';
+                generations.forEach(generation => {
+                    const option = document.createElement('option');
+                    option.value = generation;
+                    option.text = generation;
+                    generationSelect.appendChild(option);
+                });
+            });
+    }
+</script>
+
+</body>
+</html>

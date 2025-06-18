@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Главная страница</title>
+    <style>
+        body {
+            background-color: #eabc05; /* Желтый фон страницы */
+            color: #222222; /* Черный текст */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        h2, h3 {
+            text-align: center;
+            color: #222222; /* Черный цвет для заголовков */
+        }
+        p {
+            font-size: 16px;
+            margin: 8px 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 2px solid #222222; /* Черная рамка */
+            border-radius: 10px;
+            background-color: #ffcc00; /* Желтый фон формы */
+            text-align: center;
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        .button-group a {
+            text-decoration: none;
+        }
+        button {
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #222222; /* Черная кнопка */
+            color: #ffcc00; /* Желтый текст */
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #444444; /* Темный черный на hover */
+        }
+        .section {
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #222222;
+        }
+        .logout {
+            margin-top: 20px;
+            display: block;
+            font-size: 16px;
+            color: #444444;
+            text-decoration: none;
+        }
+        .logout:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Добро пожаловать, <span th:text="${user.username} + ' ' + ${user.surname}">[Имя Фамилия]</span>!</h2>
+    <p><strong>Email:</strong> <span th:text="${user.email}">[email]</span></p>
+    <p><strong>Телефон:</strong> <span th:text="${user.phone_number}">[номер телефона]</span></p>
+    <p><strong>Роль:</strong> <span th:text="${user.role}">[роль]</span></p>
+
+
+
+
+    <div th:if="${isClient}" class="section">
+        <div class="button-group">
+            <a th:href="@{/user/edit}">
+            <button>Изменить данные</button>
+        </a>
+            <a th:href="@{/autos}">
+                <button>Мои авто</button>
+            </a>
+            <a th:href="@{/addAuto}">
+                <button>Добавить авто</button>
+            </a>
+            <a th:href="@{/selectAutoAndService}">
+                <button>Запись на услуги</button>
+            </a>
+            <a th:href="@{/orders}">
+                <button>История записей</button>
+            </a>
+        </div>
+    </div>
+
+    <div th:if="${isOperator}" class="section">
+        <h3>Доступные действия для оператора:</h3>
+        <div class="button-group">
+            <a th:href="@{/operatorBD/tables}">
+                <button>Открыть список таблиц</button>
+            </a>
+            <a th:href="@{/operatorBD/personnel}">
+                <button>Cписок персонала</button>
+            </a>
+            <a th:href="@{/operatorBD/registerManagerForm}">
+                <button>Зарегистрировать менеджера</button>
+            </a>
+        </div>
+    </div>
+
+    <div th:if="${isManager}" class="section">
+        <h3>Доступные действия для менеджера:</h3>
+        <div class="button-group">
+            <a th:href="@{/manager/allAutos}">
+                <button>Открыть список всех авто</button>
+            </a>
+            <a th:href="@{/manager/clients}">
+                <button>Список клиентов</button>
+            </a>
+            <a th:href="@{/manager/addScheduleSlot}">
+                <button>Добавить слот для записи</button>
+            </a>
+            <a th:href="@{/manager/viewSlots}">
+                <button>Посмотреть слоты для записи</button>
+            </a>
+            <a th:href="@{/manager/orders}">
+                <button>Заказы</button>
+            </a>
+            <a th:href="@{/manager/statistics}">
+                <button>Статистика</button>
+            </a>
+        </div>
+    </div>
+
+    <a th:href="@{/login}" class="logout">Выйти</a>
+</div>
+
+</body>
+</html>

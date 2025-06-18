@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Confirmation</title>
+    <style>
+        body {
+            background-color: #eabc05; /* Желтый фон страницы */
+            color: #222222; /* Черный текст */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        h2, h3 {
+            text-align: center;
+            color: #222222; /* Черный цвет для заголовков */
+        }
+        p {
+            font-size: 16px;
+            margin: 8px 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 2px solid #222222; /* Черная рамка */
+            border-radius: 10px;
+            background-color: #ffcc00; /* Желтый фон формы */
+            text-align: center;
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        .button-group a {
+            text-decoration: none;
+        }
+        button {
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #222222; /* Черная кнопка */
+            color: #ffcc00; /* Желтый текст */
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #444444; /* Темный черный на hover */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Добро пожаловать в систему записей в автосервис!</h2>
+    <p>Вы успешно зарегистрировались! Теперь вы можете прройти процедуру авторизации.</p>
+
+    <div class="button-group">
+        <a th:href="@{/login}">
+            <button>Перейти к авторизации</button>
+        </a>
+    </div>
+</div>
+
+</body>
+</html>
+

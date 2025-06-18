@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Регистрация менеджера</title>
+    <style>
+        body {
+            background-color: #eabc05; /* Желтый фон страницы */
+            color: #222222; /* Черный текст */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            color: #222222; /* Черный цвет заголовка */
+        }
+        .form-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 2px solid #222222; /* Черная рамка */
+            border-radius: 10px;
+            background-color: #ffcc00; /* Желтый фон формы */
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            font-size: 16px;
+            color: #222222; /* Черный цвет для меток */
+        }
+        input[type="text"], input[type="password"], input[type="email"] {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            border: 2px solid #222222;
+            border-radius: 5px;
+            background-color: #222222; /* Черный фон поля */
+            color: #ffcc00; /* Желтый цвет текста */
+        }
+        input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
+            border-color: #444444; /* Темный цвет при фокусе */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #222222; /* Черная кнопка */
+            color: #ffcc00; /* Желтый текст */
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #444444; /* Темный черный на hover */
+        }
+        .error {
+            color: #ff0000; /* Красный цвет для ошибок */
+            font-size: 12px;
+        }
+        a {
+            color: #222222;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: #444444;
+        }
+    </style>
+</head>
+<body>
+<h1 style="text-align: center;">Регистрация нового менеджера</h1>
+
+<div class="form-container">
+    <form th:action="@{/operatorBD/registerManager}" th:object="${Manager}" method="post">
+
+        <div th:if="${message}" class="error" style="text-align: center;">
+            <p th:text="${message}"></p>
+        </div>
+
+        <div class="form-group">
+            <label for="username">Имя:</label>
+            <input type="text" id="username" th:field="*{username}" required>
+            <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="surname">Фамилия:</label>
+            <input type="text" id="surname" th:field="*{surname}" required>
+            <div th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}" class="error"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" th:field="*{password}" required>
+            <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="phone_number">Номер телефона:</label>
+            <input type="text" id="phone_number" th:field="*{phone_number}" required placeholder="+7 (___) ___ __ __">
+            <div th:if="${#fields.hasErrors('phone_number')}" th:errors="*{phone_number}" class="error"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" th:field="*{email}" required>
+            <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error"></div>
+        </div>
+
+        <button type="submit">Зарегистрировать менеджера</button>
+    </form>
+    <p><a th:href="@{/home}">Назад</a></p>
+</div>
+
+<script>
+    document.getElementById('phone_number').addEventListener('input', function (e) {
+        const x = e.target.value.replace(/\D/g, '').match(/(\d{1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
+        e.target.value = x ? `+${x[1]} (${x[2]}) ${x[3]}-${x[4]}-${x[5]}` : '';
+    });
+</script>
+</body>
+</html>

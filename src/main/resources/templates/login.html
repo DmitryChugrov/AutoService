@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Авторизация в системе записей в автосервис</title>
+    <style>
+        body {
+            background-color: #eabc05; /* Желтый фон страницы */
+            color: #222222; /* Черный текст */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        h2 {
+            color: #222222; /* Черный цвет для заголовка */
+            text-align: center;
+            margin-top: 50px;
+        }
+        .form-container {
+            background-color: #ffcc00; /* Желтый фон формы */
+            border: 2px solid #222222; /* Черная рамка */
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #222222; /* Черный цвет для меток */
+        }
+        input[type="text"], input[type="password"] {
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #444444;
+            border-radius: 5px;
+            background-color: #222222; /* Черный фон для полей ввода */
+            color: #ffcc00; /* Желтые буквы */
+        }
+        input[type="text"]:focus, input[type="password"]:focus {
+            border-color: #ffcc00; /* Желтая рамка при фокусе */
+            outline: none;
+        }
+        button {
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #222222;
+            color: #ffcc00; /* Желтый текст */
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #444444; /* Тёмный черный на hover */
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+        a {
+            color: #222222;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Вход в систему записей в автосервис</h2>
+
+<div class="form-container">
+    <form th:action="@{/login}" method="post">
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="username" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit">Войти</button>
+        <p class="error" th:if="${param.error}" th:text="'Неправильный email или пароль'"></p>
+    </form>
+    <p>Нет аккаунта? <a th:href="@{/register}">Зарегистрироваться</a></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Подтверждение записи</title>
+    <style>
+        body {
+            background-color: #eabc05; /* Желтый фон страницы */
+            color: #222222; /* Черный текст */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            color: #222222; /* Черный цвет заголовка */
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 2px solid #222222; /* Черная рамка */
+            border-radius: 10px;
+            background-color: #ffcc00; /* Желтый фон формы */
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            font-size: 16px;
+            color: #222222; /* Черный цвет для меток */
+        }
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            border: 2px solid #222222;
+            border-radius: 5px;
+            background-color: #222222; /* Черный фон поля */
+            color: #ffcc00; /* Желтый цвет текста */
+        }
+        .form-control:focus {
+            border-color: #444444; /* Темный цвет при фокусе */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .btn {
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #222222; /* Черная кнопка */
+            color: #ffcc00; /* Желтый текст */
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #444444; /* Темный черный на hover */
+        }
+        .text-danger {
+            color: #ff0000; /* Красный цвет для ошибок */
+        }
+        textarea {
+            background-color: #222222; /* Черный фон для textarea */
+            color: #ffcc00; /* Желтый текст в textarea */
+            border: 2px solid #222222;
+            border-radius: 5px;
+            padding: 8px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Подтверждение записи на услугу</h1>
+
+    <p><strong>Автомобиль:</strong> <span th:text="${auto.brand + ' ' + auto.model}"></span></p>
+    <p><strong>Услуга:</strong> <span th:text="${serviceType}"></span></p>
+
+    <p><strong>Дата и время:</strong> <span th:text="${formattedDateTime}"></span></p>
+
+    <form action="/confirmOrder" method="post">
+        <input type="hidden" name="slotId" th:value="${slot.id}" />
+        <input type="hidden" name="carId" th:value="${auto.id}" />
+        <input type="hidden" name="serviceType" th:value="${serviceType}" />
+
+        <div class="form-group">
+            <label for="comment">Комментарий:</label>
+            <textarea id="comment" name="comment" rows="4" cols="50" placeholder="Добавьте комментарий к заказу (необязательно)"></textarea>
+        </div>
+
+        <button type="submit" class="btn">Подтвердить запись</button>
+    </form>
+</div>
+
+</body>
+</html>

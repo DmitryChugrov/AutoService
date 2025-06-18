@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить комментарий</title>
+    <style>
+        body {
+            background-color: #eabc05; /* Желтый фон страницы */
+            color: #222222; /* Черный текст */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #222222; /* Черный цвет заголовка */
+        }
+
+        form {
+            width: 900px;  /* Статическая ширина формы */
+            margin: 50px auto;
+            padding: 30px;
+            border: 2px solid #222222; /* Черная рамка */
+            border-radius: 10px;
+            background-color: #ffcc00; /* Желтый фон формы */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 12px;  /* Увеличиваем отступ между метками и полями */
+            font-weight: bold;
+            color: #222222; /* Черный цвет для меток */
+        }
+
+        input[type="text"], textarea {
+            width: 100%;   /* Устанавливаем ширину на 100%, чтобы поле растягивалось по всей ширине родительского блока */
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #222222;
+            border-radius: 4px;
+            background-color: #222222;
+            color: #ffcc00;
+        }
+
+        textarea {
+            height: 200px;  /* Статическая высота для текстового поля */
+            resize: none;   /* Отключаем возможность изменения размера */
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            border-color: #444444; /* Темный цвет при фокусе */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            padding: 15px 25px;
+            background-color: #222222; /* Черный фон */
+            color: #ffcc00; /* Желтый текст */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #444444; /* Темный черный на hover */
+        }
+
+        .text-danger {
+            color: #ff0000; /* Красный цвет для ошибок */
+        }
+    </style>
+</head>
+<body>
+
+<h1>Добавить комментарий</h1>
+
+<form th:action="@{/manager/orders/addComment}" method="post">
+    <input type="hidden" name="orderId" th:value="${order.id}">
+    <label for="managerComment">Комментарий менеджера:</label>
+    <textarea id="managerComment" name="managerComment" rows="6" placeholder="Введите комментарий"></textarea>
+    <button type="submit">Сохранить</button>
+</form>
+
+</body>
+</html>

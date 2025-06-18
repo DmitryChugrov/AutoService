@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Заказы</title>
+    <style>
+        body {
+            background-color: #eabc05; /* Желтый фон */
+            color: #222222; /* Черный текст */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            color: #222222; /* Черный текст заголовка */
+        }
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 2px solid #222222; /* Черная рамка */
+            border-radius: 10px;
+            background-color: #ffcc00; /* Желтый фон формы */
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            font-size: 16px;
+            color: #222222;
+            margin-right: 10px;
+            width: 150px;
+        }
+        .form-control {
+            width: 100%;
+            max-width: 450px;
+            padding: 8px;
+            font-size: 16px;
+            border: 2px solid #222222;
+            border-radius: 5px;
+            background-color: #222222; /* Черный фон поля */
+            color: #ffcc00; /* Желтый текст */
+        }
+        .form-control:focus {
+            border-color: #444444;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .btn {
+            padding: 10px 20px;
+            background-color: #222222; /* Черная кнопка */
+            color: #ffcc00; /* Желтый текст */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #444444;
+        }
+        .text-danger {
+            color: #ff0000; /* Красный цвет */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #222222;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #222222; /* Черный фон */
+            color: #ffcc00; /* Желтый текст */
+        }
+        td {
+            background-color: #ffcc00; /* Желтый фон */
+            color: #222222; /* Черный текст */
+        }
+        select {
+            background-color: #222222;
+            color: #ffcc00;
+            padding: 8px;
+            border: 2px solid #222222;
+            border-radius: 5px;
+        }
+        button:disabled {
+           background-color: #ccc;
+           cursor: not-allowed;
+       }
+        .btn-confirm {
+            background-color: #66cc66;
+            color: black;
+        }
+        .btn-progress {
+            background-color: #ffa500;
+            color: black;
+        }
+        .btn-complete {
+            background-color: #007bff;
+            color: black;
+        }
+        form button {
+    background-color: #222222; /* Черный фон */
+    color: #ffcc00; /* Желтый текст */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #444444;
+}
+    </style>
+</head>
+<body>
+<h1>Список заказов</h1>
+
+<!-- Форма для поиска заказов -->
+<form action="/manager/orders" method="get">
+    <div class="form-group">
+        <label for="orderId">ID заказа:</label>
+        <input type="number" name="orderId" id="orderId" class="form-control" placeholder="ID заказа">
+    </div>
+    <div class="form-group">
+        <label for="clientEmail">Email клиента:</label>
+        <input type="text" name="clientEmail" id="clientEmail" class="form-control" placeholder="Email клиента">
+    </div>
+    <div class="form-group">
+        <label for="brand">Бренд:</label>
+        <select name="brand" id="brand" class="form-control">
+            <option value="">-- Выберите бренд --</option>
+            <option value="TOYOTA">TOYOTA</option>
+            <option value="HONDA">HONDA</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="model">Модель:</label>
+        <select name="model" id="model" class="form-control">
+            <option value="">-- Выберите модель --</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="year">Год:</label>
+        <input type="number" name="year" id="year" class="form-control" placeholder="Год">
+    </div>
+    <div class="form-group">
+        <label for="vinNumber">VIN:</label>
+        <input type="text" name="vinNumber" id="vinNumber" class="form-control" placeholder="VIN">
+    </div>
+    <div class="form-group">
+        <label for="GOS_number">Госномер:</label>
+        <input type="text" name="GOS_number" id="GOS_number" class="form-control" placeholder="Госномер">
+    </div>
+    <div class="form-group">
+        <label for="date">Дата:</label>
+        <input type="date" name="date" id="date" class="form-control" placeholder="Дата заказа">
+    </div>
+    <div class="form-group">
+        <label for="status">Статус:</label>
+        <select name="status" id="status" class="form-control">
+            <option value="">-- Выберите статус --</option>
+            <option value="1">Ожидает подтверждения</option>
+            <option value="2">Подтвержден</option>
+            <option value="3">На исполнении</option>
+            <option value="4">Исполнен</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="serviceType">Вид услуги:</label>
+        <select name="serviceType" id="serviceType" class="form-control">
+            <option value="">-- Выберите услугу --</option>
+            <option value="Замена масла">Замена масла</option>
+            <option value="Диагностика">Диагностика</option>
+            <option value="Ремонт двигателя">Ремонт двигателя</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn">Поиск</button>
+    </div>
+</form>
+
+<!-- Таблица с заказами -->
+<table>
+    <thead>
+    <tr>
+        <th>Заказ ID</th>
+        <th>Клиент</th>
+        <th>Автомобиль</th>
+        <th>Год</th>
+        <th>VIN</th>
+        <th>Госномер</th>
+        <th>Услуга</th>
+        <th>Дата и время</th>
+        <th>Статус</th>
+        <th>Цена</th>
+        <th>Установить цену</th>
+        <th>Комментарий клиента</th>
+        <th>Комментарий менеджера</th>
+        <th>Изменение статуса</th>
+        <th>Заказ-наряд</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order : ${orders}">
+        <td th:text="${order.id}"></td>
+        <td th:text="${order.client.email}"></td>
+        <td th:text="${order.auto.brand + ' ' + order.auto.model + ' ' + order.auto.generation}"></td>
+        <td th:text="${order.auto.year}"></td>
+        <td th:text="${order.auto.vinNumber}"></td>
+        <td th:text="${order.auto.GOS_number}"></td>
+        <td th:text="${order.serviceType}"></td>
+        <td th:text="${order.slot.date + ' ' + order.slot.time}"></td>
+        <td th:switch="${order.status}">
+            <span th:case="1">Ожидает подтверждения</span>
+            <span th:case="2">Подтвержден</span>
+            <span th:case="3">На исполнении</span>
+            <span th:case="4">Исполнен</span>
+        </td>
+        <td>
+            <span th:text="${order.price != null ? order.price : 'Не установлена'}"></span>
+        </td>
+        <td>
+            <form th:action="@{/manager/orders/setPrice}" method="post">
+                <input type="hidden" name="orderId" th:value="${order.id}">
+                <input type="number" name="price" class="form-control" placeholder="Введите цену" step="0.01" min="0" required>
+                <button type="submit">Сохранить</button>
+            </form>
+        </td>
+
+        <td th:text="${order.clientComment != null ? order.clientComment : 'Нет комментария'}"></td>
+        <td>
+            <form th:action="@{/manager/orders/addComment}" method="get" style="display:inline;">
+                <input type="hidden" name="orderId" th:value="${order.id}">
+                <button type="submit">Добавить комментарий</button>
+            </form>
+        </td>
+        <td>
+            <form th:action="@{/manager/orders/updateStatus}" method="post">
+                <input type="hidden" name="orderId" th:value="${order.id}">
+                <button type="submit" class="btn-confirm" th:disabled="${order.status != 1}" name="status" value="2">Подтвердить</button>
+                <button type="submit" class="btn-progress" th:disabled="${order.status != 2}" name="status" value="3">На исполнение</button>
+                <button type="submit" class="btn-complete" th:disabled="${order.status != 3}" name="status" value="4">Исполнен</button>
+            </form>
+        </td>
+        <td>
+            <form th:action="@{/manager/orders/exportDocx}" method="post">
+                <input type="hidden" name="orderId" th:value="${order.id}">
+                <button type="submit">Составить заказ-наряд</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="footer">
+    <a th:href="@{/home}" class="btn">На главную</a>
+</div>
+
+<script>
+    // Добавление динамической загрузки моделей в зависимости от выбранного бренда
+    document.getElementById("brand").addEventListener("change", function() {
+        const brand = this.value;
+        const modelSelect = document.getElementById("model");
+        modelSelect.innerHTML = "<option value=''>-- Выберите модель --</option>";
+
+        let models = [];
+
+        if (brand === "TOYOTA") {
+            models = ["Camry", "Corolla"];
+        } else if (brand === "HONDA") {
+            models = ["Civic", "Accord"];
+        }
+
+        models.forEach(function(model) {
+            const option = document.createElement("option");
+            option.value = model;
+            option.textContent = model;
+            modelSelect.appendChild(option);
+        });
+    });
+</script>
+
+</body>
+</html>

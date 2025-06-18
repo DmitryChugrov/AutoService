@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Менеджер зарегистрирован</title>
+    <style>
+        body {
+            background-color: #eabc05; /* Желтый фон страницы */
+            color: #222222; /* Черный текст */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #222222; /* Черный цвет заголовка */
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 2px solid #222222; /* Черная рамка */
+            border-radius: 10px;
+            background-color: #ffcc00; /* Желтый фон формы */
+        }
+        .btn {
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #222222; /* Черная кнопка */
+            color: #ffcc00; /* Желтый текст */
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            display: block;
+            margin: 20px auto;
+        }
+        .btn:hover {
+            background-color: #444444; /* Темный черный на hover */
+        }
+        .text-danger {
+            color: #ff0000; /* Красный цвет для ошибок */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Менеджер зарегистрирован!</h2>
+    <p>Поздравляем, менеджер успешно зарегистрирован в системе.</p>
+    <button class="btn" onclick="window.location.href='/home'">Перейти на главную страницу</button>
+</div>
+
+</body>
+</html>
+

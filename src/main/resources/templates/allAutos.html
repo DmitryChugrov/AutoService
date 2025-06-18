@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Список всех автомобилей</title>
+    <style>
+        body {
+            background-color: #eabc05; /* Желтый фон страницы */
+            color: #222222; /* Черный текст */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            color: #222222; /* Черный цвет заголовка */
+            margin-top: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 2px solid #222222; /* Черная рамка */
+            border-radius: 10px;
+            background-color: #ffcc00; /* Желтый фон формы */
+        }
+        .search-container {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .search-container input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #222222;
+            border-radius: 5px;
+            background-color: #222222; /* Черный фон поля */
+            color: #ffcc00; /* Желтый текст */
+        }
+        .search-container button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #222222; /* Черная кнопка */
+            color: #ffcc00; /* Желтый текст */
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .search-container button:hover {
+            background-color: #444444; /* Темный черный на hover */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table th, table td {
+            padding: 10px;
+            text-align: left;
+            border: 2px solid #222222; /* Черные границы ячеек */
+        }
+        table th {
+            background-color: #222222; /* Черный фон заголовков таблицы */
+            color: #ffcc00; /* Желтый текст */
+        }
+        table.table-striped tbody tr:nth-child(even) {
+    background-color: #ffcc00; /* Желтый фон */
+    color: #222222; /* Черный текст */
+}
+
+table.table-striped tbody tr:nth-child(odd) {
+    background-color: #eabc05; /* Другой оттенок желтого для нечетных строк */
+    color: #222222; /* Черный текст */
+}
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Список всех автомобилей</h1>
+
+    <div class="search-container">
+        <form th:action="@{/manager/allAutos}" method="get">
+            <input type="text" name="brand" th:value="${brand}" placeholder="Поиск по бренду">
+            <input type="text" name="model" th:value="${model}" placeholder="Поиск по модели">
+            <input type="text" name="vinNumber" th:value="${vinNumber}" placeholder="Поиск по VIN номеру">
+            <input type="text" name="gosNumber" th:value="${gosNumber}" placeholder="Поиск по госномеру">
+            <input type="text" name="email" th:value="${email}" placeholder="Поиск по email клиента">
+            <button type="submit">Найти</button>
+        </form>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Бренд</th>
+            <th>Модель</th>
+            <th>Поколение</th>
+            <th>Год</th>
+            <th>VIN номер</th>
+            <th>Госномер</th>
+            <th>Пользователь</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="auto : ${autos}">
+            <td th:text="${auto.brand}">Бренд</td>
+            <td th:text="${auto.model}">Модель</td>
+            <td th:text="${auto.generation}">Поколение</td>
+            <td th:text="${auto.year}">Год</td>
+            <td th:text="${auto.vinNumber}">VIN номер</td>
+            <td th:text="${auto.GOS_number}">Госномер</td>
+            <td th:text="${auto.user.email}">Email пользователя</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

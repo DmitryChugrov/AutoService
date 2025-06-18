@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Ошибка</title>
+    <style>
+        body {
+            background-color: #eabc05; /* Желтый фон */
+            color: #222222; /* Черный текст */
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            font-size: 36px;
+            color: #222222; /* Черный текст */
+        }
+        p {
+            font-size: 18px;
+            margin: 20px 0;
+        }
+        .btn {
+            padding: 10px 20px;
+            background-color: #222222; /* Черный фон кнопки */
+            color: #ffcc00; /* Желтый текст кнопки */
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #444444; /* Темно-серый фон при наведении */
+        }
+    </style>
+</head>
+<body>
+<h1>Произошла ошибка</h1>
+<p>К сожалению, произошла непредвиденная ошибка. Пожалуйста, попробуйте позже.</p>
+<a th:href="@{/}" class="btn">На главную</a>
+</body>
+</html>

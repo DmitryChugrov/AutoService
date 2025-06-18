@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Данные таблицы</title>
+    <style>
+        body {
+            background-color: #eabc05; /* Желтый фон страницы */
+            color: #222222; /* Черный текст */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            color: #222222; /* Черный цвет заголовка */
+        }
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+
+
+            background-color: #eabc05; /* Желтый фон формы */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #222222;
+        }
+        th {
+            background-color: #222222; /* Черный фон для заголовков */
+            color: #ffcc00; /* Желтый текст для заголовков */
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd; /* Легкое выделение строки при наведении */
+        }
+        a {
+            color: #222222;
+            text-decoration: none;
+            font-size: 16px;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        a:hover {
+            text-decoration: underline; /* Подчеркивание при наведении */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Данные таблицы [[${tableName}]]</h1>
+    <table>
+        <tr th:each="row : ${tableData}">
+            <td th:each="cell : ${row}">[[${cell}]]</td>
+        </tr>
+    </table>
+    <a th:href="@{'/operatorBD/tables'}">Назад к таблицам</a>
+</div>
+
+</body>
+</html>

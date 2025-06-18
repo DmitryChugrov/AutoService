@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Выбор времени записи</title>
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            background-color: #eabc05; /* Желтый фон страницы */
+            color: #222222; /* Черный текст */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            color: #222222; /* Черный цвет заголовка */
+        }
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 2px solid #222222; /* Черная рамка */
+            border-radius: 10px;
+            background-color: #ffcc00; /* Желтый фон формы */
+        }
+
+        /* Календарь */
+        #calendar {
+            width: 1000px;
+            height: 700px;
+            margin: 0 auto;
+            border: 1px solid #222222;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            background-color: #eabc05;
+        }
+
+        .selected-date {
+            background-color: #c99f06;
+            color: black;
+        }
+
+        .modal-content {
+            padding: 20px;
+            border: 1px solid #222222;
+            background-color: #eabc05; /* Желтый фон для модального окна */
+            color: #222222;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #222222; /* Черная кнопка */
+            color: #ffcc00; /* Желтый текст */
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #444444; /* Темный черный на hover */
+        }
+
+        .text-danger {
+            color: #ff0000; /* Красный цвет для ошибок */
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-4">
+    <h1>Выберите время для записи</h1>
+    <div id="calendar"></div>
+</div>
+
+<script th:inline="javascript">
+    let slots = /*[[${slots}]]*/ [];
+    let carId = /*[[${carId}]]*/;
+    let serviceType = /*[[${serviceType}]]*/;
+
+    document.addEventListener('DOMContentLoaded', function() {
+        let calendarEl = document.getElementById('calendar');
+        let today = new Date(); // Текущая дата
+
+        let calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            locale: 'ru',
+            displayEventTime: false,
+            events: slots
+                .filter(slot => {
+                    // Преобразуем дату слота в объект Date
+                    let slotDate = new Date(slot.date);
+                    return slotDate >= today; // Исключаем прошлые даты
+                })
+                .map(slot => {
+                    let timeParts = slot.time.split(":");
+                    let formattedTime = timeParts[0].replace(/^0/, '') + ":" + timeParts[1];
+
+                    return {
+                        title: 'Доступно: ' + formattedTime,
+                        start: slot.date + 'T' + slot.time,
+                        color: '#66cc66', // Зеленый для доступных слотов
+                        textColor: '#222222',
+                        url: '/confirmOrder?slotId=' + slot.id + '&carId=' + carId + '&serviceType=' + serviceType
+                    };
+                }),
+            eventClick: function(info) {
+                info.jsEvent.preventDefault();
+
+                if (info.event.url) {
+                    window.location.href = info.event.url;
+                }
+            }
+        });
+
+        calendar.render();
+    });
+</script>
+</body>
+</html>

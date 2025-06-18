@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Обращения</title>
+    <style>
+        body {
+            background-color: #eabc05; /* Желтый фон страницы */
+            color: #222222; /* Черный текст */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            color: #222222; /* Черный цвет заголовка */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #ffcc00; /* Желтый фон таблицы */
+            border: 2px solid #222222; /* Черные границы */
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border: 1px solid #222222; /* Черные границы ячеек */
+        }
+        th {
+            background-color: #222222; /* Черный фон заголовков таблицы */
+            color: #ffcc00; /* Желтый текст */
+        }
+        td {
+            background-color: #222222; /* Черный фон ячеек */
+            color: #ffcc00; /* Желтый текст */
+        }
+        .btn {
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #222222; /* Черная кнопка */
+            color: #ffcc00; /* Желтый текст */
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px 0;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #444444; /* Темный черный на hover */
+        }
+        .footer {
+            text-align: center;
+            margin: 20px 0;
+        }
+        td span.status {
+            display: inline-block;
+            padding: 4px;
+            border-radius: 4px;
+            color: #000000;
+        }
+        td span.status-4 {
+            background-color: #00ff00; /* Зеленый для "Исполнен" */
+        }
+        td span.status-2 {
+            background-color: #ff00ff; /* Желтый для "Подтвержден менеджером" */
+        }
+        td span.status-3 {
+            background-color: #ff6600; /* Оранжевый для "На исполнении" */
+        }
+        td span.status-1 {
+            background-color: #FF0000; /* Голубой для "Ожидает подтверждения менеджера" */
+        }
+        td .price {
+            background-color: transparent;
+            color: inherit;
+        }
+        a {
+            color: #222222; /* Черный цвет текста ссылок */
+            text-decoration: none; /* Убрать подчеркивание */
+        }
+        a:hover {
+            text-decoration: underline; /* Подчеркивание при наведении */
+        }
+    </style>
+</head>
+<body>
+<h1>Ваши обращения</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Автомобиль</th>
+        <th>Услуга</th>
+        <th>Дата и время</th>
+        <th>Статус</th>
+        <th>Цена</th>
+        <th>Ваш комментарий</th>
+        <th>Комментарий менеджера</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order : ${orders}">
+        <td th:text="${order.auto.brand + ' ' + order.auto.model}">Автомобиль</td>
+        <td th:text="${order.serviceType}">Услуга</td>
+        <td th:text="${order.slot.date + ' ' + order.slot.time}">Дата и время</td>
+        <td>
+            <span th:switch="${order.status}">
+                <span th:case="1" class="status status-1">Ожидает подтверждения менеджера</span>
+                <span th:case="2" class="status status-2">Подтвержден менеджером</span>
+                <span th:case="3" class="status status-3">На исполнении</span>
+                <span th:case="4" class="status status-4">Исполнен</span>
+            </span>
+        </td>
+        <td>
+            <span th:text="${order.price != null ? order.price : 'Не установлена'}" class="price"></span>
+        </td>
+        <td th:text="${order.clientComment != null ? order.clientComment : 'Нет комментария'}">Комментарий</td>
+        <td th:text="${order.managerComment != null ? order.managerComment : 'Нет комментария'}">Комментарий менеджера</td>
+    </tr>
+    </tbody>
+</table>
+<div class="footer">
+    <a th:href="@{/home}" class="btn">На главную</a>
+</div>
+</body>
+</html>
